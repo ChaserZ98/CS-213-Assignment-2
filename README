@@ -1,0 +1,8 @@
+git config user.name "xxx"
+$git config user.name "xxx"Ying Yu
+git config user.email "yy465@scarletmail.rutgers.edu"
+$ cat > README
+$ git status
+$ git add README
+$ git status
+$ git commit -m "addeuser name  change"
