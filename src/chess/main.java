@@ -1,4 +1,11 @@
 package chess;
+/**
+ * 
+ * @author Feiyu Zheng
+ * @author Ying Yu
+ * 
+ *
+ */
 
 public class main {
 
