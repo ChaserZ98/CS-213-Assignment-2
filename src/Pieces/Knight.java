@@ -1,4 +1,4 @@
-package chess;
+package Pieces;
 
 /**
  * Group 13
@@ -8,5 +8,5 @@ package chess;
  *
  */
 
-public class board {
+public class Knight {
 }
