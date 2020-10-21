@@ -1,5 +1,4 @@
-package Pieces;
-
+package model;
 /**
  * Group 13
  * @author Feiyu Zheng
@@ -8,5 +7,5 @@ package Pieces;
  *
  */
 
-public class bishop {
+public class Board {
 }

@@ -8,7 +8,7 @@ package Pieces;
  *
  */
 
-public class Piece {
+public class CommonPiece {
     public String CurrentPosition;
     public String Color;
 

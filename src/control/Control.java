@@ -1,5 +1,4 @@
-package chess;
-
+package control;
 /**
  * Group 13
  * @author Feiyu Zheng
@@ -8,5 +7,5 @@ package chess;
  *
  */
 
-public class board {
+public class Control {
 }
