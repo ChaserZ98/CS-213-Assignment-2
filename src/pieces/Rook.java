@@ -8,12 +8,11 @@ package pieces;
  *
  */
 
-public class Rook extends pieces.CommonPiece {
+public class Rook extends CommonPiece {
 
 
-    public Rook(String newPosition, String newColor) {
-        this.CurrentPosition = newPosition;
-        this.Color = newColor;
+    public Rook(String Position, String Col) {
+        super(Position, Col);
     }
 
     public String toString(){
@@ -28,5 +27,10 @@ public class Rook extends pieces.CommonPiece {
     public boolean CheckValid(String dest){
 
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
     }
 }

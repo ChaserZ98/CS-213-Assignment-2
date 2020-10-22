@@ -1,5 +1,7 @@
 package pieces;
 
+import java.util.Objects;
+
 /**
  * Group 13
  * @author Feiyu Zheng
@@ -13,26 +15,25 @@ public abstract class CommonPiece {
     public String CurrentPosition;
     public String Color;
 
-    public CommonPiece(){
-        this.CurrentPosition = null;
-        this.Color = null;
-    }
-
     public CommonPiece(String Position, String Col){
         this.CurrentPosition = Position;
         this.Color = Col;
     }
 
-    public boolean CheckValid(String dest){
+    public boolean checkValid(String dest){
         return false;
     }
 
-    public void SetCurrentPosition(String position){
+    public void setCurrentPosition(String position){
         this.CurrentPosition = position;
     }
 
-    public void SetColor(String color){
-        this.Color= color;
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        CommonPiece that = (CommonPiece) o;
+        return Objects.equals(CurrentPosition, that.CurrentPosition) &&
+                Objects.equals(Color, that.Color);
     }
 
 }

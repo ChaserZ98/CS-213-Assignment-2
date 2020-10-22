@@ -8,12 +8,11 @@ package pieces;
  *
  */
 
-public class Queen extends pieces.CommonPiece {
+public class Queen extends CommonPiece {
 
 
-    public Queen(String newPosition, String newColor) {
-        this.CurrentPosition = newPosition;
-        this.Color = newColor;
+    public Queen(String Position, String Col) {
+        super(Position, Col);
     }
 
     public String toString(){
@@ -28,5 +27,10 @@ public class Queen extends pieces.CommonPiece {
     public boolean CheckValid(String dest){
 
         return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
     }
 }

@@ -8,12 +8,11 @@ package pieces;
  *
  */
 
-public class Pawn extends pieces.CommonPiece {
+public class Pawn extends CommonPiece {
 
 
-    public Pawn(String newPosition, String newColor) {
-        this.CurrentPosition = newPosition;
-        this.Color = newColor;
+    public Pawn(String Position, String Col) {
+        super(Position, Col);
     }
 
     public String toString(){
@@ -26,7 +25,11 @@ public class Pawn extends pieces.CommonPiece {
      *
      */
     public boolean CheckValid(String dest){
-
         return false;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }
