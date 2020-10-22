@@ -12,12 +12,12 @@ import java.util.Objects;
 
 public abstract class CommonPiece {
 
-    public String CurrentPosition;
-    public String Color;
+    public String currentPosition;
+    public String color;
 
     public CommonPiece(String Position, String Col){
-        this.CurrentPosition = Position;
-        this.Color = Col;
+        this.currentPosition = Position;
+        this.color = Col;
     }
 
     public boolean checkValid(String dest){
@@ -25,15 +25,16 @@ public abstract class CommonPiece {
     }
 
     public void setCurrentPosition(String position){
-        this.CurrentPosition = position;
+        this.currentPosition = position;
     }
+    public abstract String getName();
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         CommonPiece that = (CommonPiece) o;
-        return Objects.equals(CurrentPosition, that.CurrentPosition) &&
-                Objects.equals(Color, that.Color);
+        return Objects.equals(currentPosition, that.currentPosition) &&
+                Objects.equals(color, that.color);
     }
 
 }

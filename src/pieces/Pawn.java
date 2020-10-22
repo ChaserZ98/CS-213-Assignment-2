@@ -15,8 +15,9 @@ public class Pawn extends CommonPiece {
         super(Position, Col);
     }
 
-    public String toString(){
-        if (this.Color.equals("white")) return "wp";
+    @Override
+    public String getName() {
+        if (this.color.equals("white")) return "wp";
         else return "bp";
     }
 

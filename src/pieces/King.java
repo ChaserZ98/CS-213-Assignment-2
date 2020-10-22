@@ -15,8 +15,9 @@ public class King extends CommonPiece {
         super(Position, Col);
     }
 
-    public String toString(){
-        if (this.Color.equals("white")) return "wK";
+    @Override
+    public String getName() {
+        if (this.color.equals("white")) return "wK";
         else return "bK";
     }
 
