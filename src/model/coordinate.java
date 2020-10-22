@@ -22,33 +22,30 @@ public class coordinate {
      * Check if input position is inside the display board--[0][0] to [7][7]
      *
      */
-    public boolean pieceInsideBoard(String position){
+    public boolean pieceInsideBoard(String letterCoordinate){
 
-        int[] positionCoordinate = PositionToCoordinate(position);
+        int[] intCoordinate = PositionToCoordinate(letterCoordinate);
 
-        if(positionCoordinate[0] >= 0 && positionCoordinate[0] <= 7 && positionCoordinate[1] >= 0 && positionCoordinate[1] <= 7)
-            return true;
-        else
-            return false;
+        return intCoordinate[0] >= 0 && intCoordinate[0] <= 7 && intCoordinate[1] >= 0 && intCoordinate[1] <= 7;
     }
 
     /**
      * Transfer input position string to coordinate
      *
      */
-    public int[] PositionToCoordinate(String position){
-        int[] positionCoordinate = new int[2];
-        positionCoordinate[0] = -1;
-        positionCoordinate[1] = -1;
+    public int[] PositionToCoordinate(String letterCoordinate){
+        int[] intCoordinate = new int[2];
+        intCoordinate[0] = -1;
+        intCoordinate[1] = -1;
 
-        position = position.toLowerCase();
+        letterCoordinate = letterCoordinate.toLowerCase();
 
-        if (position.length() != 2) return positionCoordinate;
+        if (letterCoordinate.length() != 2) return intCoordinate;
 
-        int letterToInteger = position.charAt(0)-'a'+1;
-        positionCoordinate[0] = letterToInteger;
-        positionCoordinate[1] = Integer.parseInt(position.charAt(1)+"");
+        int xCoordinate = letterCoordinate.charAt(0)-'a'+1;
+        intCoordinate[0] = xCoordinate;
+        intCoordinate[1] = Integer.parseInt(letterCoordinate.charAt(1)+"");
 
-        return positionCoordinate;
+        return intCoordinate;
     }
 }
