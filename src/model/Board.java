@@ -15,8 +15,8 @@ import java.util.ArrayList;
 
 public class Board {
 
-    final String[] rowLetterCoordinate = {" a", " b", " c", " d", " e", " f", " g", " h"};
-    final String[] columnLetterCoordinate = {" 8", " 7", " 6", " 5", " 4", " 3", " 2", " 1"};
+    final String[] columnLetterCoordinate = {" a", " b", " c", " d", " e", " f", " g", " h"};
+    final String[] rowLetterCoordinate = {" 8", " 7", " 6", " 5", " 4", " 3", " 2", " 1"};
     ArrayList<CommonPiece> pieces = new ArrayList<>();
     String[][] boardLayout = {
             {"  ", "##", "  ", "##", "  ", "##", "  ", "##"},
@@ -33,8 +33,34 @@ public class Board {
         initializePieces();
         fillBroad();
     }
+    public CommonPiece getPieceByPosition(String letterCoordinate){
+        for(CommonPiece piece : this.pieces){
+            if(piece.currentPosition.equals(letterCoordinate)){
+                return piece;
+            }
+        }
+        return null;
+
+    }
     public boolean movePiece(String currentCoordinate, String destination){
-        return true;
+        int[] intCurrentCoordinate = control.letterCoordinateToIntCoordinate(currentCoordinate);
+        int[] intDestination = control.letterCoordinateToIntCoordinate(destination);
+//        System.out.println("position: " + intCurrentCoordinate[0] + " " + intCurrentCoordinate[1]);
+//        System.out.println("destination: " + intDestination[0] + " " + intDestination[1]);
+        CommonPiece piece = getPieceByPosition(currentCoordinate);
+        if(piece != null){
+            piece.currentPosition = destination;
+            boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+            boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate.length) % 2 == 1 ? "##": "  ";
+            return true;
+        }
+        else{
+//            System.out.println("Illegal move: no piece in location " + currentCoordinate);
+            System.out.println("Illegal move, try again");
+            return false;
+        }
+
+
     }
     public void fillBroad(){
         for (CommonPiece piece : this.pieces) {
@@ -82,7 +108,7 @@ public class Board {
             out.append("\n");
         }
         for(int i = 0; i < columnLetterCoordinate.length; i++){
-            out.append(this.rowLetterCoordinate[i]);
+            out.append(this.columnLetterCoordinate[i]);
             if(i != columnLetterCoordinate.length - 1){
                 out.append(" ");
             }
