@@ -20,9 +20,7 @@ public abstract class CommonPiece {
         this.color = Col;
     }
 
-    public boolean checkValid(String dest){
-        return false;
-    }
+    public abstract boolean checkMoveRange(String destination);
 
     public void setCurrentPosition(String position){
         this.currentPosition = position;

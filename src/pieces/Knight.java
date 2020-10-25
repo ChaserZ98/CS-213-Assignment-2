@@ -16,18 +16,14 @@ public class Knight extends CommonPiece {
     }
 
     @Override
+    public boolean checkMoveRange(String destination) {
+        return false;
+    }
+
+    @Override
     public String getName() {
         if (this.color.equals("white")) return "wN";
         else return "bN";
-    }
-
-    /**
-     * Knight moving path valid check
-     *
-     */
-    public boolean CheckValid(String dest){
-
-        return false;
     }
 
     @Override

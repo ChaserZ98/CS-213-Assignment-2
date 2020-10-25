@@ -1,5 +1,7 @@
 package pieces;
 
+import control.control;
+
 /**
  * Group 13
  * @author Feiyu Zheng
@@ -16,18 +18,27 @@ public class Rook extends CommonPiece {
     }
 
     @Override
+    public boolean checkMoveRange(String destination) {
+        int[] intCurrentCoordinate = control.letterCoordinateToIntCoordinate(this.currentPosition);
+        int[] intDestination = control.letterCoordinateToIntCoordinate(destination);
+        if(destination.equals(this.currentPosition)){
+            return false;
+        }
+        if(intCurrentCoordinate[0] == intDestination[0] && Math.abs(intCurrentCoordinate[1] - intDestination[1]) > 0){
+            return true;
+        }
+        else if(intCurrentCoordinate[1] == intDestination[1] && Math.abs(intCurrentCoordinate[0] - intDestination[0]) > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    @Override
     public String getName() {
         if (this.color.equals("white")) return "wR";
         else return "bR";
-    }
-
-    /**
-     * Rook moving path valid check
-     *
-     */
-    public boolean CheckValid(String dest){
-
-        return false;
     }
 
     @Override
