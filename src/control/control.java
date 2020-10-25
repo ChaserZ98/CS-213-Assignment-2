@@ -20,6 +20,18 @@ public class control {
 
     /**
      *
+     * @param str input string
+     * @return true if the input string is a letter coordinate
+     */
+    public static boolean isLetterCoordinate(String str){
+        if(str.length()==2){
+            return str.charAt(0) >= 'a' && str.charAt(0) <= 'h' && str.charAt(1) >= '1' && str.charAt(1) <= '8';
+        }
+        return false;
+    }
+
+    /**
+     *
      * @param letterCoordinate position of piece represented by letter coordinate
      * @return intCoordinate
      */
