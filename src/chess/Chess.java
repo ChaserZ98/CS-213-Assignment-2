@@ -1,10 +1,6 @@
-
 package chess;
-import control.control;
-import model.Board;
-import model.ChessGame;
 
-import java.util.Scanner;
+import model.ChessGame;
 
 /**
  * Group 13
