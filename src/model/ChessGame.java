@@ -2,6 +2,12 @@ package model;
 
 import java.util.Scanner;
 
+/**
+ * Group 13
+ * @author Feiyu Zheng
+ * @author Ying Yu
+ */
+
 public class ChessGame {
     final String whitePlayer = "White";
     final String blackPlayer = "Black";
@@ -51,7 +57,7 @@ public class ChessGame {
                     else if(parameter.length == 3 || parameter.length == 4){
 
                         if(parameter[parameter.length - 1].equals("draw?")){
-                            System.out.println("draw request");
+//                            System.out.println("draw request");
                             drawRequest = true;
                             isMoveLegal = true;
                         }
@@ -69,6 +75,10 @@ public class ChessGame {
                         System.out.println("Illegal move, try again");
                     }
                 }
+
+                //check check
+
+                //check checkmate
 
                 if(isMoveLegal){
                     currentPlayer = currentPlayer.equals(blackPlayer)? whitePlayer : blackPlayer;
