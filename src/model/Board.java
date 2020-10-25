@@ -33,6 +33,7 @@ public class Board {
         initializePieces();
         fillBroad();
     }
+
     public CommonPiece getPieceByPosition(String letterCoordinate){
         for(CommonPiece piece : this.pieces){
             if(piece.currentPosition.equals(letterCoordinate)){
@@ -42,26 +43,40 @@ public class Board {
         return null;
 
     }
+//    public boolean checkPieceMove(){
+//
+//    }
+
     public boolean movePiece(String currentCoordinate, String destination){
+        if(!control.isLetterCoordinate(currentCoordinate) || !control.isLetterCoordinate(destination)){
+            System.out.println("Illegal move, try again");
+            return false;
+        }
+
         int[] intCurrentCoordinate = control.letterCoordinateToIntCoordinate(currentCoordinate);
         int[] intDestination = control.letterCoordinateToIntCoordinate(destination);
 //        System.out.println("position: " + intCurrentCoordinate[0] + " " + intCurrentCoordinate[1]);
 //        System.out.println("destination: " + intDestination[0] + " " + intDestination[1]);
         CommonPiece piece = getPieceByPosition(currentCoordinate);
         if(piece != null){
-            piece.currentPosition = destination;
-            boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
-            boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate.length) % 2 == 1 ? "##": "  ";
-            return true;
+            if(piece.checkMoveRange(destination)){
+                piece.currentPosition = destination;
+                boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                return true;
+            }
+            else{
+                System.out.println("Illegal move, try again");
+                return false;
+            }
         }
         else{
 //            System.out.println("Illegal move: no piece in location " + currentCoordinate);
             System.out.println("Illegal move, try again");
             return false;
         }
-
-
     }
+
     public void fillBroad(){
         for (CommonPiece piece : this.pieces) {
             int xIntCoordinate = piece.currentPosition.charAt(0) - 'a';
