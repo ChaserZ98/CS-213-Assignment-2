@@ -75,9 +75,9 @@ public class ChessGame {
                     }
                 }
 
-                //check check
+                // TODO: 2020/10/26 isInCheck method
 
-                //check checkmate
+                // TODO: 2020/10/26 isCheckmate method
 
                 if(isMoveLegal){
                     chessBoard.clearEnPassant(currentPlayer.equals(blackPlayer)? whitePlayer.toLowerCase() : blackPlayer.toLowerCase());
