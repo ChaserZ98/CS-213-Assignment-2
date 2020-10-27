@@ -11,7 +11,8 @@ import control.control;
  */
 
 public class King extends CommonPiece {
-
+    public boolean isCastled = false;
+    public boolean isChecked = false;
 
     public King(String Position, String Col) {
         super(Position, Col);
