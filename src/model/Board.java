@@ -95,8 +95,63 @@ public class Board {
             }
         }
         else if(piece instanceof King){
-            // TODO: 2020/10/25  
+            // TODO: 2020/10/25
             System.out.println("King");
+            if(piece.checkMoveRange(destination)){   //normal move
+                if(destPiece == null){
+                    piece.currentPosition = destination;
+                    boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                    boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                    return true;
+                }
+                else if(!destPiece.color.equals(piece.color)){
+                    this.pieces.remove(destPiece);
+                    piece.currentPosition = destination;
+                    boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                    boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+            else { //abnormal move or Castling
+
+                /**
+                 * To check if Castling
+                 */
+                // TODO
+                if (piece.color.equals("white")) {
+                    switch (destination) {
+                        case "g1":
+
+                            return true;
+                        case "c1":
+
+                            return true;
+                        default:
+                            System.out.println("Illegal move, try again");
+                            return false;
+                    }
+                }
+                else {
+                    switch (destination) {
+                        case "g8":
+
+                            return true;
+                        case "c8":
+
+                            return true;
+                        default:
+                            System.out.println("Illegal move, try again");
+                            return false;
+                    }
+
+
+                }
+
+
+            }
         }
         else if(piece instanceof Knight){
             if(piece.checkMoveRange(destination)){
