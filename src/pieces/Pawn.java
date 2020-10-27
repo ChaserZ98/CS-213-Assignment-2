@@ -12,6 +12,7 @@ import control.control;
 
 public class Pawn extends CommonPiece {
 
+    public boolean canBeEnPassant = false;
 
     public Pawn(String Position, String Col) {
         super(Position, Col);
@@ -29,7 +30,7 @@ public class Pawn extends CommonPiece {
                 return intCurrentCoordinate[0] - intDestination[0] <=2 && intCurrentCoordinate[0] - intDestination[0] > 0 && intCurrentCoordinate[1] == intDestination[1];
             }
             else{
-                return intCurrentCoordinate[0] - intDestination[0] ==1  && intCurrentCoordinate[1] == intDestination[1];
+                return (intCurrentCoordinate[0] - intDestination[0] ==1  && intCurrentCoordinate[1] == intDestination[1]) || (intCurrentCoordinate[0] - intDestination[0] == 1 && Math.abs(intCurrentCoordinate[1] - intDestination[1]) == 1);
             }
         }
         else{
@@ -37,7 +38,7 @@ public class Pawn extends CommonPiece {
                 return intDestination[0] - intCurrentCoordinate[0] <=2 && intDestination[0] - intCurrentCoordinate[0] > 0 && intCurrentCoordinate[1] == intDestination[1];
             }
             else{
-                return intDestination[0] - intCurrentCoordinate[0] ==1  && intCurrentCoordinate[1] == intDestination[1];
+                return (intDestination[0] - intCurrentCoordinate[0] == 1  && intCurrentCoordinate[1] == intDestination[1]) || (intDestination[0] - intCurrentCoordinate[0] == 1 && Math.abs(intCurrentCoordinate[1] - intDestination[1]) == 1);
             }
         }
     }
