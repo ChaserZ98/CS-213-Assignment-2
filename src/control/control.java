@@ -41,4 +41,19 @@ public class control {
         intCoordinate[0] = 8 - (letterCoordinate.charAt(1) - '0');
         return intCoordinate;
     }
+
+    /**
+     *
+     * @param intCoordinate position of piece represented by int coordinate
+     * @return letterCoordinate
+     */
+    public static String intCoordinateToLetterCoordinate(int[] intCoordinate){
+        return Character.toString('a' + intCoordinate[1]) + Character.toString('8' - intCoordinate[0]);
+    }
+
+//    public static void main(String[] args) {
+//        int[] arr = {1, 2};
+//        System.out.println(intCoordinateToLetterCoordinate(arr));
+//
+//    }
 }
