@@ -1,7 +1,7 @@
 package model;
 
 import pieces.*;
-import control.control;
+import util.util;
 
 import java.util.ArrayList;
 
@@ -34,6 +34,14 @@ public class Board {
         fillBroad();
     }
 
+    public void clearEnPassant(String color){
+        for(CommonPiece piece : this.pieces){
+            if(piece instanceof Pawn && piece.color.equals(color)){
+                ((Pawn) piece).canBeEnPassant = false;
+            }
+        }
+    }
+
     public CommonPiece getPieceByPosition(String letterCoordinate){
         for(CommonPiece piece : this.pieces){
             if(piece.currentPosition.equals(letterCoordinate)){
@@ -43,35 +51,378 @@ public class Board {
         return null;
 
     }
-//    public boolean checkPieceMove(){
-//
-//    }
+    public boolean checkPieceMove(CommonPiece piece, String destination, String option){
 
-    public boolean movePiece(String currentCoordinate, String destination){
-        if(!control.isLetterCoordinate(currentCoordinate) || !control.isLetterCoordinate(destination)){
+        CommonPiece destPiece = getPieceByPosition(destination);
+        int[] intCurrentCoordinate = util.letterCoordinateToIntCoordinate(piece.currentPosition);
+        int[] intDestination = util.letterCoordinateToIntCoordinate(destination);
+
+        if(piece instanceof Bishop){
+            if(piece.checkMoveRange(destination)){
+
+                int verticalIncrement = intDestination[0] < intCurrentCoordinate[0] ? -1 : 1;
+                int horizontalIncrement = intDestination[1] < intCurrentCoordinate[1] ? -1 : 1;
+
+                //diagonal move
+                int[] intBetweenCoordinate = {intCurrentCoordinate[0] + verticalIncrement, intCurrentCoordinate[1] + horizontalIncrement};
+                while(intBetweenCoordinate[0] != intDestination[0] && intBetweenCoordinate[1] != intDestination[1]){
+                    CommonPiece betweenPiece = getPieceByPosition(util.intCoordinateToLetterCoordinate(intBetweenCoordinate));
+                    if(betweenPiece != null){
+                        return false;
+                    }
+                    intBetweenCoordinate[0] += verticalIncrement;
+                    intBetweenCoordinate[1] += horizontalIncrement;
+                }
+                if(destPiece == null){
+                    piece.currentPosition = destination;
+                    boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                    boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                    return true;
+                }
+                else if(!destPiece.color.equals(piece.color)){
+                    this.pieces.remove(destPiece);
+                    piece.currentPosition = destination;
+                    boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                    boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+            else{
+                return false;
+            }
+        }
+        else if(piece instanceof King){
+            // TODO: 2020/10/25  
+            System.out.println("King");
+        }
+        else if(piece instanceof Knight){
+            if(piece.checkMoveRange(destination)){
+                if(destPiece == null){
+                    piece.currentPosition = destination;
+                    boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                    boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                    return true;
+                }
+                else if(!destPiece.color.equals(piece.color)){
+                    this.pieces.remove(destPiece);
+                    piece.currentPosition = destination;
+                    boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                    boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+            else{
+                return false;
+            }
+        }
+        else if(piece instanceof Pawn){
+            if(piece.checkMoveRange(destination)){
+                //vertical move
+                if(intCurrentCoordinate[1] == intDestination[1]){
+                    //move 1 square
+                    if(Math.abs(intDestination[0] - intCurrentCoordinate[0]) == 1 && destPiece == null){
+                        //promotion
+                        if(intDestination[0] == (piece.color.equals("white")? 0 : 7)){
+                            switch (option) {
+                                case "B" -> {
+                                    this.pieces.remove(piece);
+                                    piece = new Bishop(util.intCoordinateToLetterCoordinate(intDestination), piece.color);
+                                    this.pieces.add(piece);
+                                }
+                                case "N" -> {
+                                    this.pieces.remove(piece);
+                                    piece = new Knight(util.intCoordinateToLetterCoordinate(intDestination), piece.color);
+                                    this.pieces.add(piece);
+                                }
+                                case "Q" -> {
+                                    this.pieces.remove(piece);
+                                    piece = new Queen(util.intCoordinateToLetterCoordinate(intDestination), piece.color);
+                                    this.pieces.add(piece);
+                                }
+                                case "R" -> {
+                                    this.pieces.remove(piece);
+                                    piece = new Rook(util.intCoordinateToLetterCoordinate(intDestination), piece.color);
+                                    this.pieces.add(piece);
+                                }
+                                default -> {
+                                    this.pieces.remove(piece);
+                                    piece = new Queen(util.intCoordinateToLetterCoordinate(intDestination), piece.color);
+                                    this.pieces.add(piece);
+                                }
+                            }
+                        }
+                        else{
+                            piece.currentPosition = destination;
+                        }
+                        boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                        boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                        return true;
+                    }
+                    //move 2 square
+                    else if(Math.abs(intDestination[0] - intCurrentCoordinate[0]) == 2 && destPiece == null){
+                        CommonPiece betweenPiece = getPieceByPosition(util.intCoordinateToLetterCoordinate(new int[]{piece.color.equals("white")? intDestination[0] + 1 : intDestination[0] - 1, intDestination[1]}));
+                        if(betweenPiece == null){
+                            piece.currentPosition = destination;
+                            boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                            boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                            ((Pawn) piece).canBeEnPassant = true;
+                            return true;
+                        }
+                        else{
+                            return false;
+                        }
+                    }
+                }
+                //diagonal move (capture)
+                else if(Math.abs(intCurrentCoordinate[1] - intDestination[1]) == 1 && Math.abs(intCurrentCoordinate[0] - intDestination[0]) == 1){
+                    CommonPiece enPassantPawn = getPieceByPosition(util.intCoordinateToLetterCoordinate(new int[]{piece.color.equals("white")? intDestination[0] + 1 : intDestination[0] - 1, intDestination[1]}));
+                    //en passant
+                    if(enPassantPawn instanceof Pawn){
+                        if(((Pawn) enPassantPawn).canBeEnPassant){
+                            this.pieces.remove(enPassantPawn);
+                            boardLayout[piece.color.equals("white")? intDestination[0] + 1 : intDestination[0] - 1][intDestination[1]] = (piece.color.equals("white")? intDestination[0] + 1 : intDestination[0] - 1 + intDestination[1]) % 2 == 1 ? "##": "  ";
+                            piece.currentPosition = destination;
+                            boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                            boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                            return true;
+                        }
+                    }
+                    //regular capture
+                    else if(!destPiece.color.equals(piece.color)){
+                        this.pieces.remove(destPiece);
+                        if(intDestination[0] == (piece.color.equals("white")? 0 : 7)){
+                            switch (option) {
+                                case "B" -> {
+                                    this.pieces.remove(piece);
+                                    piece = new Bishop(util.intCoordinateToLetterCoordinate(intDestination), piece.color);
+                                    this.pieces.add(piece);
+                                }
+                                case "N" -> {
+                                    this.pieces.remove(piece);
+                                    piece = new Knight(util.intCoordinateToLetterCoordinate(intDestination), piece.color);
+                                    this.pieces.add(piece);
+                                }
+                                case "Q" -> {
+                                    this.pieces.remove(piece);
+                                    piece = new Queen(util.intCoordinateToLetterCoordinate(intDestination), piece.color);
+                                    this.pieces.add(piece);
+                                }
+                                case "R" -> {
+                                    this.pieces.remove(piece);
+                                    piece = new Rook(util.intCoordinateToLetterCoordinate(intDestination), piece.color);
+                                    this.pieces.add(piece);
+                                }
+                                default -> {
+                                    this.pieces.remove(piece);
+                                    piece = new Queen(util.intCoordinateToLetterCoordinate(intDestination), piece.color);
+                                    this.pieces.add(piece);
+                                }
+                            }
+                        }
+                        else{
+                            piece.currentPosition = destination;
+                        }
+                        boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                        boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+            }
+            else{
+                return false;
+            }
+        }
+        else if(piece instanceof Queen){
+            if(piece.checkMoveRange(destination)){
+
+                int verticalIncrement = intDestination[0] < intCurrentCoordinate[0] ? -1 : 1;
+                int horizontalIncrement = intDestination[1] < intCurrentCoordinate[1] ? -1 : 1;
+
+                //horizontal move
+                if(intCurrentCoordinate[0] == intDestination[0]){
+                    int[] intBetweenCoordinate = {intCurrentCoordinate[0], intCurrentCoordinate[1] + horizontalIncrement};
+                    while(intBetweenCoordinate[1] != intDestination[1]){
+                        CommonPiece betweenPiece = getPieceByPosition(util.intCoordinateToLetterCoordinate(intBetweenCoordinate));
+                        if(betweenPiece != null){
+                            return false;
+                        }
+                        intBetweenCoordinate[1] += horizontalIncrement;
+                    }
+                    if(destPiece == null){
+                        piece.currentPosition = destination;
+                        boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                        boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                        return true;
+                    }
+                    else if(!destPiece.color.equals(piece.color)){
+                        this.pieces.remove(destPiece);
+                        piece.currentPosition = destination;
+                        boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                        boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+                //vertical move
+                else if(intCurrentCoordinate[1] == intDestination[1]){
+                    int[] intBetweenCoordinate = {intCurrentCoordinate[0] + verticalIncrement, intCurrentCoordinate[1]};
+                    while(intBetweenCoordinate[0] != intDestination[0]){
+                        CommonPiece betweenPiece = getPieceByPosition(util.intCoordinateToLetterCoordinate(intBetweenCoordinate));
+                        if(betweenPiece != null){
+                            return false;
+                        }
+                        intBetweenCoordinate[0] += verticalIncrement;
+                    }
+                    if(destPiece == null){
+                        piece.currentPosition = destination;
+                        boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                        boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                        return true;
+                    }
+                    else if(!destPiece.color.equals(piece.color)){
+                        this.pieces.remove(destPiece);
+                        piece.currentPosition = destination;
+                        boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                        boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+                //diagonal move
+                else{
+                    int[] intBetweenCoordinate = {intCurrentCoordinate[0] + verticalIncrement, intCurrentCoordinate[1] + horizontalIncrement};
+                    while(intBetweenCoordinate[0] != intDestination[0] && intBetweenCoordinate[1] != intDestination[1]){
+                        CommonPiece betweenPiece = getPieceByPosition(util.intCoordinateToLetterCoordinate(intBetweenCoordinate));
+                        if(betweenPiece != null){
+                            return false;
+                        }
+                        intBetweenCoordinate[0] += verticalIncrement;
+                        intBetweenCoordinate[1] += horizontalIncrement;
+                    }
+                    if(destPiece == null){
+                        piece.currentPosition = destination;
+                        boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                        boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                        return true;
+                    }
+                    else if(!destPiece.color.equals(piece.color)){
+                        this.pieces.remove(destPiece);
+                        piece.currentPosition = destination;
+                        boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                        boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+            }
+            else{
+                return false;
+            }
+        }
+        else if(piece instanceof Rook){
+            if(piece.checkMoveRange(destination)){
+
+                int verticalIncrement = intDestination[0] < intCurrentCoordinate[0] ? -1 : 1;
+                int horizontalIncrement = intDestination[1] < intCurrentCoordinate[1] ? -1 : 1;
+
+                //horizontal move
+                if(intCurrentCoordinate[0] == intDestination[0]){
+                    int[] intBetweenCoordinate = {intCurrentCoordinate[0], intCurrentCoordinate[1] + horizontalIncrement};
+                    while(intBetweenCoordinate[1] != intDestination[1]){
+                        CommonPiece betweenPiece = getPieceByPosition(util.intCoordinateToLetterCoordinate(intBetweenCoordinate));
+                        if(betweenPiece != null){
+                            return false;
+                        }
+                        intBetweenCoordinate[1] += horizontalIncrement;
+                    }
+                    if(destPiece == null){
+                        piece.currentPosition = destination;
+                        boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                        boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                        return true;
+                    }
+                    else if(!destPiece.color.equals(piece.color)){
+                        this.pieces.remove(destPiece);
+                        piece.currentPosition = destination;
+                        boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                        boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+                //vertical move
+                else if(intCurrentCoordinate[1] == intDestination[1]){
+                    int[] intBetweenCoordinate = {intCurrentCoordinate[0] + verticalIncrement, intCurrentCoordinate[1]};
+                    while(intBetweenCoordinate[0] != intDestination[0]){
+                        CommonPiece betweenPiece = getPieceByPosition(util.intCoordinateToLetterCoordinate(intBetweenCoordinate));
+                        if(betweenPiece != null){
+                            return false;
+                        }
+                        intBetweenCoordinate[0] += verticalIncrement;
+                    }
+                    if(destPiece == null){
+                        piece.currentPosition = destination;
+                        boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                        boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                        return true;
+                    }
+                    else if(!destPiece.color.equals(piece.color)){
+                        this.pieces.remove(destPiece);
+                        piece.currentPosition = destination;
+                        boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
+                        boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+            }
+            else{
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean movePiece(String currentPlayer, String currentCoodinate, String destination){
+        return movePiece(currentPlayer, currentCoodinate, destination, "");
+    }
+
+    public boolean movePiece(String currentPlayer, String currentCoordinate, String destination, String option){
+        if(!util.isLetterCoordinate(currentCoordinate) || !util.isLetterCoordinate(destination)){
             System.out.println("Illegal move, try again");
             return false;
         }
 
-        int[] intCurrentCoordinate = control.letterCoordinateToIntCoordinate(currentCoordinate);
-        int[] intDestination = control.letterCoordinateToIntCoordinate(destination);
-//        System.out.println("position: " + intCurrentCoordinate[0] + " " + intCurrentCoordinate[1]);
-//        System.out.println("destination: " + intDestination[0] + " " + intDestination[1]);
         CommonPiece piece = getPieceByPosition(currentCoordinate);
-        if(piece != null){
-            if(piece.checkMoveRange(destination)){
-                piece.currentPosition = destination;
-                boardLayout[intDestination[0]][intDestination[1]] = piece.getName();
-                boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
-                return true;
-            }
-            else{
-                System.out.println("Illegal move, try again");
-                return false;
-            }
+        if(piece == null || !piece.color.equals(currentPlayer.toLowerCase())){
+            System.out.println("Illegal move, try again");
+            return false;
+        }
+
+        boolean moveResult = checkPieceMove(piece, destination, option);
+        if(moveResult){
+            return true;
         }
         else{
-//            System.out.println("Illegal move: no piece in location " + currentCoordinate);
             System.out.println("Illegal move, try again");
             return false;
         }
@@ -94,7 +445,7 @@ public class Board {
         this.pieces.add(new Knight("g8", "black"));
         this.pieces.add(new Rook("h8", "black"));
         for(int i = 0; i < columnLetterCoordinate.length; i++){
-            this.pieces.add(new Pawn(control.intToChar(i) + "7", "black"));
+            this.pieces.add(new Pawn(util.intToChar(i) + "7", "black"));
         }
 
         this.pieces.add(new Rook("a1", "white"));
@@ -106,7 +457,7 @@ public class Board {
         this.pieces.add(new Knight("g1", "white"));
         this.pieces.add(new Rook("h1", "white"));
         for(int i = 0; i < columnLetterCoordinate.length; i++){
-            this.pieces.add(new Pawn(control.intToChar(i) + "2", "white"));
+            this.pieces.add(new Pawn(util.intToChar(i) + "2", "white"));
         }
 
     }
