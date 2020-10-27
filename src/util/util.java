@@ -1,4 +1,4 @@
-package control;
+package util;
 
 /**
  * Group 13
@@ -8,7 +8,7 @@ package control;
  *
  */
 
-public class control {
+public class util {
 
     /**
      * Tranfer from Integer to Character for ASCII

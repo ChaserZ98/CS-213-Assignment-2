@@ -1,6 +1,6 @@
 package pieces;
 
-import control.control;
+import util.util;
 
 /**
  * Group 13
@@ -19,8 +19,8 @@ public class Bishop extends CommonPiece {
 
     @Override
     public boolean checkMoveRange(String destination) {
-        int[] intCurrentCoordinate = control.letterCoordinateToIntCoordinate(this.currentPosition);
-        int[] intDestination = control.letterCoordinateToIntCoordinate(destination);
+        int[] intCurrentCoordinate = util.letterCoordinateToIntCoordinate(this.currentPosition);
+        int[] intDestination = util.letterCoordinateToIntCoordinate(destination);
         return !destination.equals(this.currentPosition) && (Math.abs(intCurrentCoordinate[0] - intDestination[0]) == Math.abs(intCurrentCoordinate[1] - intDestination[1]));
     }
 
