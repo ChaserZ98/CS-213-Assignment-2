@@ -50,7 +50,7 @@ public class ChessGame {
                     //regular move w/o appended option
                     if(parameter.length == 2){
 //                    System.out.println("Input: " + parameter[0] + " " + parameter[1]);
-                        isMoveLegal = chessBoard.movePiece(parameter[0], parameter[1]);
+                        isMoveLegal = chessBoard.movePiece(currentPlayer, parameter[0], parameter[1]);
                     }
 
                     //regular move with appended option
@@ -61,9 +61,8 @@ public class ChessGame {
                             drawRequest = true;
                             isMoveLegal = true;
                         }
-                        else if(parameter[2].equals("N")){
-                            System.out.println("Pawn promotion");
-                            isMoveLegal = true;
+                        else if(parameter[2].equals("B") || parameter[2].equals("N") || parameter[2].equals("Q") || parameter[2].equals("R")){
+                            isMoveLegal = chessBoard.movePiece(currentPlayer, parameter[0], parameter[1], parameter[2]);
                         }
                         else{
                             System.out.println("Illegal move, try again");
@@ -81,6 +80,7 @@ public class ChessGame {
                 //check checkmate
 
                 if(isMoveLegal){
+                    chessBoard.clearEnPassant(currentPlayer.equals(blackPlayer)? whitePlayer.toLowerCase() : blackPlayer.toLowerCase());
                     currentPlayer = currentPlayer.equals(blackPlayer)? whitePlayer : blackPlayer;
                 }
             }
