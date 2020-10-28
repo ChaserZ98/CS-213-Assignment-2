@@ -12,6 +12,7 @@ import util.util;
 
 public class Rook extends CommonPiece {
 
+    public boolean canCastling = true;
 
     public Rook(String Position, String Col) {
         super(Position, Col);

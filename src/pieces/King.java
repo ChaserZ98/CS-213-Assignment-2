@@ -11,7 +11,7 @@ import util.util;
  */
 
 public class King extends CommonPiece {
-    public boolean isCastled = false;
+    public boolean canCastling = true;
     public boolean isChecked = false;
 
     public King(String Position, String Col) {
@@ -22,7 +22,22 @@ public class King extends CommonPiece {
     public boolean checkMoveRange(String destination) {
         int[] intCurrentCoordinate = util.letterCoordinateToIntCoordinate(this.currentPosition);
         int[] intDestination = util.letterCoordinateToIntCoordinate(destination);
-        return !destination.equals(this.currentPosition) && Math.abs(intCurrentCoordinate[0] - intDestination[0]) + Math.abs(intCurrentCoordinate[1] - intDestination[1]) == 1;
+        if(destination.equals(this.currentPosition)){
+            return false;
+        }
+        else if(Math.abs(intCurrentCoordinate[0] - intDestination[0]) + Math.abs(intCurrentCoordinate[1] - intDestination[1]) == 1){
+            return true;
+        }
+        else if(intCurrentCoordinate[0] == intDestination[0] && Math.abs(intCurrentCoordinate[1] - intDestination[1]) == 2){
+            return true;
+        }
+        else if(Math.abs(intCurrentCoordinate[0] - intDestination[0]) == 1 && Math.abs(intCurrentCoordinate[1] - intDestination[1]) == 1){
+            return true;
+        }
+        else{
+            return false;
+        }
+//        return !destination.equals(this.currentPosition) && (Math.abs(intCurrentCoordinate[0] - intDestination[0]) + Math.abs(intCurrentCoordinate[1] - intDestination[1]) == 1 || (intCurrentCoordinate[0] == intDestination[0] && Math.abs(intCurrentCoordinate[1] - intDestination[1]) == 2) || (Math.abs(intCurrentCoordinate[0] - intDestination[0]) == 1 && Math.abs(intCurrentCoordinate[1] - intDestination[1]) == 1));
     }
 
     @Override

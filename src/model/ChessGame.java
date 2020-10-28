@@ -1,5 +1,8 @@
 package model;
 
+import pieces.CommonPiece;
+import pieces.King;
+
 import java.util.Scanner;
 
 /**
@@ -74,15 +77,15 @@ public class ChessGame {
                         System.out.println("Illegal move, try again");
                     }
                 }
+            }
 
-                // TODO: 2020/10/26 isInCheck method
+            updateKingCheckStatus(chessBoard);
 
-                // TODO: 2020/10/26 isCheckmate method
+            // TODO: 2020/10/26 isCheckmate method
 
-                if(isMoveLegal){
-                    chessBoard.clearEnPassant(currentPlayer.equals(blackPlayer)? whitePlayer.toLowerCase() : blackPlayer.toLowerCase());
-                    currentPlayer = currentPlayer.equals(blackPlayer)? whitePlayer : blackPlayer;
-                }
+            if(isMoveLegal){
+                chessBoard.clearEnPassant(currentPlayer.equals(blackPlayer)? whitePlayer.toLowerCase() : blackPlayer.toLowerCase());
+                currentPlayer = currentPlayer.equals(blackPlayer)? whitePlayer : blackPlayer;
             }
         }
         input.close();
@@ -95,5 +98,25 @@ public class ChessGame {
             System.out.println(blackPlayer + " wins");
         }
         return true;
+    }
+    public void updateKingCheckStatus(Board chessBoard){
+        CommonPiece whiteKing = null;
+        CommonPiece blackKing = null;
+        for(CommonPiece piece : chessBoard.pieces){
+            if(piece instanceof King && piece.color.equals(whitePlayer.toLowerCase())){
+                whiteKing = (King) piece;
+            }
+            else if(piece instanceof King && piece.color.equals(blackPlayer.toLowerCase())){
+                blackKing = (King) piece;
+            }
+        }
+        ((King) whiteKing).isChecked = chessBoard.isPositionUnderCapture(whiteKing.currentPosition, whiteKing.color);
+        ((King) blackKing).isChecked = chessBoard.isPositionUnderCapture(blackKing.currentPosition, blackKing.color);
+        if(((King) whiteKing).isChecked){
+            System.out.println("Check");
+        }
+        if(((King) whiteKing).isChecked){
+            System.out.println("Check");
+        }
     }
 }
