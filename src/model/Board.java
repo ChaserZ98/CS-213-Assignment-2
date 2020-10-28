@@ -60,7 +60,7 @@ public class Board {
         if(destPiece == null){
             this.pieces.add(tempPiece);
         }
-        this.pieces.remove(destPiece);
+//        this.pieces.remove(destPiece);
 
         for(CommonPiece piece : this.pieces){
             if(!piece.color.equals(currentPlayer)){
@@ -71,9 +71,9 @@ public class Board {
                 }
             }
         }
-        if(destPiece != null){
-            this.pieces.add(destPiece);
-        }
+//        if(destPiece != null){
+//            this.pieces.add(destPiece);
+//        }
         this.pieces.remove(tempPiece);
         return result;
     }
@@ -120,13 +120,21 @@ public class Board {
             }
         }
 
+        CommonPiece destPiece = getPieceByPosition(destination);
+        this.pieces.remove(destPiece);
         piece.setCurrentPosition(destination);
         if(isPositionUnderCapture(king.currentPosition, king.color)){
             piece.setCurrentPosition(originalPosition);
+            if(destPiece != null){
+                this.pieces.add(destPiece);
+            }
             return true;
         }
         else{
             piece.setCurrentPosition(originalPosition);
+            if(destPiece != null){
+                this.pieces.add(destPiece);
+            }
             return false;
         }
     }

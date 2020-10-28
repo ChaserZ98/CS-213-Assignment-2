@@ -115,7 +115,7 @@ public class ChessGame {
         if(((King) whiteKing).isChecked){
             System.out.println("Check");
         }
-        if(((King) whiteKing).isChecked){
+        if(((King) blackKing).isChecked){
             System.out.println("Check");
         }
     }
