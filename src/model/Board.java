@@ -6,15 +6,12 @@ import util.util;
 import java.util.ArrayList;
 
 /**
-
  * this class creat the board
  * @author Feiyu Zheng
  * @author Ying Yu
  *
  *
  */
-
-
 public class Board {
 
     /**
@@ -105,14 +102,12 @@ public class Board {
         return result;
     }
 
-
     /**
      * check if the king will be checked after making a certain move
      * @param piece the coordinate of current piece
      * @param destination the string value of the destination
      * @return boolean value
      */
-
     public boolean willOwnKingBeChecked(CommonPiece piece, String destination){
         String originalPosition = piece.currentPosition;
         int[] intCurrentCoordinate = util.letterCoordinateToIntCoordinate(piece.currentPosition);
@@ -457,7 +452,6 @@ public class Board {
         }
         return piece;
     }
-
 
     /**
      *  check the enPassant
