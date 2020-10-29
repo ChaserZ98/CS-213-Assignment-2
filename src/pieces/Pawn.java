@@ -27,7 +27,7 @@ public class Pawn extends CommonPiece {
         }
         if(this.color.equals("white")){
             if(intCurrentCoordinate[0] == 6){
-                return intCurrentCoordinate[0] - intDestination[0] <=2 && intCurrentCoordinate[0] - intDestination[0] > 0 && intCurrentCoordinate[1] == intDestination[1];
+                return (intCurrentCoordinate[0] - intDestination[0] <=2 && intCurrentCoordinate[0] - intDestination[0] > 0 && intCurrentCoordinate[1] == intDestination[1]) || (intCurrentCoordinate[0] - intDestination[0] == 1 && Math.abs(intCurrentCoordinate[1] - intDestination[1]) == 1);
             }
             else{
                 return (intCurrentCoordinate[0] - intDestination[0] ==1  && intCurrentCoordinate[1] == intDestination[1]) || (intCurrentCoordinate[0] - intDestination[0] == 1 && Math.abs(intCurrentCoordinate[1] - intDestination[1]) == 1);
@@ -35,7 +35,7 @@ public class Pawn extends CommonPiece {
         }
         else{
             if(intCurrentCoordinate[0] == 1){
-                return intDestination[0] - intCurrentCoordinate[0] <=2 && intDestination[0] - intCurrentCoordinate[0] > 0 && intCurrentCoordinate[1] == intDestination[1];
+                return (intDestination[0] - intCurrentCoordinate[0] <=2 && intDestination[0] - intCurrentCoordinate[0] > 0 && intCurrentCoordinate[1] == intDestination[1]) || (intDestination[0] - intCurrentCoordinate[0] == 1 && Math.abs(intCurrentCoordinate[1] - intDestination[1]) == 1);
             }
             else{
                 return (intDestination[0] - intCurrentCoordinate[0] == 1  && intCurrentCoordinate[1] == intDestination[1]) || (intDestination[0] - intCurrentCoordinate[0] == 1 && Math.abs(intCurrentCoordinate[1] - intDestination[1]) == 1);
