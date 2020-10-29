@@ -3,18 +3,10 @@ package pieces;
 import util.util;
 
 /**
- * Group 13
+ * It is an inherited class of CommonPiece
  * @author Feiyu Zheng
  * @author Ying Yu
- *
- *
  */
-
-/**
- * It is an inherited class of CommonPiece
- *
- */
-
 public class King extends CommonPiece {
 
     /**
@@ -27,7 +19,6 @@ public class King extends CommonPiece {
      *
      */
     public boolean isChecked = false;
-
 
     /**
      *
@@ -45,7 +36,6 @@ public class King extends CommonPiece {
      * @return position
      */
     @Override
-
     public boolean checkMoveRange(String destination) {
         int[] intCurrentCoordinate = util.letterCoordinateToIntCoordinate(this.currentPosition);
         int[] intDestination = util.letterCoordinateToIntCoordinate(destination);
@@ -66,7 +56,6 @@ public class King extends CommonPiece {
         }
 //        return !destination.equals(this.currentPosition) && (Math.abs(intCurrentCoordinate[0] - intDestination[0]) + Math.abs(intCurrentCoordinate[1] - intDestination[1]) == 1 || (intCurrentCoordinate[0] == intDestination[0] && Math.abs(intCurrentCoordinate[1] - intDestination[1]) == 2) || (Math.abs(intCurrentCoordinate[0] - intDestination[0]) == 1 && Math.abs(intCurrentCoordinate[1] - intDestination[1]) == 1));
     }
-
 
     /**
      * get the name of current piece

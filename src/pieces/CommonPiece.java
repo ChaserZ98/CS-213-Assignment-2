@@ -11,8 +11,6 @@ import java.util.Objects;
  *
  *
  */
-
-
 public abstract class CommonPiece {
 
     /**

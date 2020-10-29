@@ -11,8 +11,9 @@ package util;
 public class util {
 
     /**
-     * Tranfer from Integer to Character for ASCII
-     *
+     * Transfer from Integer to Character for ASCII
+     * @param i integer value
+     * @return char value
      */
     public static char intToChar(int i){
         return (char) (i+97);
@@ -51,9 +52,4 @@ public class util {
         return Character.toString('a' + intCoordinate[1]) + Character.toString('8' - intCoordinate[0]);
     }
 
-//    public static void main(String[] args) {
-//        int[] arr = {1, 2};
-//        System.out.println(intCoordinateToLetterCoordinate(arr));
-//
-//    }
 }

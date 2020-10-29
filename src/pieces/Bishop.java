@@ -23,14 +23,12 @@ public class Bishop extends CommonPiece {
         super(Position, Col);
     }
 
-
     /**
      * Check the movable range of the chess pieces
      * @param destination  get target coordinates
      * @return position
      */
     @Override
-
     public boolean checkMoveRange(String destination) {
         int[] intCurrentCoordinate = util.letterCoordinateToIntCoordinate(this.currentPosition);
         int[] intDestination = util.letterCoordinateToIntCoordinate(destination);
@@ -47,7 +45,6 @@ public class Bishop extends CommonPiece {
         if (this.color.equals("white")) return "wB";
         else return "bB";
     }
-
 
     /**
      * Check if the piece is the same as itself

@@ -69,7 +69,6 @@ public class ChessGame {
 
                     //regular move w/o appended option
                     if(parameter.length == 2){
-//                    System.out.println("Input: " + parameter[0] + " " + parameter[1]);
                         isMoveLegal = chessBoard.movePiece(currentPlayer, parameter[0], parameter[1]);
                     }
 
@@ -77,7 +76,6 @@ public class ChessGame {
                     else if(parameter.length == 3 || parameter.length == 4){
 
                         if(parameter[parameter.length - 1].equals("draw?")){
-//                            System.out.println("draw request");
                             drawRequest = true;
                             isMoveLegal = true;
                         }
@@ -194,6 +192,4 @@ public class ChessGame {
         }
         return result;
     }
-
-
 }

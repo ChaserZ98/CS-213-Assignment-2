@@ -21,7 +21,6 @@ public class Queen extends CommonPiece {
         super(Position, Col);
     }
 
-
     /**
      * Check the movable range of the chess pieces
      * @param destination  get target coordinates
@@ -47,7 +46,6 @@ public class Queen extends CommonPiece {
             return false;
         }
     }
-
 
     /**
      * get the name of current piece

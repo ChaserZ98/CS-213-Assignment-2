@@ -21,7 +21,6 @@ public class Knight extends CommonPiece {
         super(Position, Col);
     }
 
-
     /**
      * Check the movable range of the chess pieces
      * @param destination  get target coordinates
@@ -34,7 +33,6 @@ public class Knight extends CommonPiece {
         return !destination.equals(this.currentPosition) && Math.abs(intCurrentCoordinate[0] - intDestination[0]) + Math.abs(intCurrentCoordinate[1] - intDestination[1]) == 3;
     }
 
-
     /**
      * get the name of current piece
      * @return name
@@ -45,7 +43,6 @@ public class Knight extends CommonPiece {
         if (this.color.equals("white")) return "wN";
         else return "bN";
     }
-
 
     /**
      * Check if the piece is the same as itself

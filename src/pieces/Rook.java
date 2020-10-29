@@ -28,7 +28,7 @@ public class Rook extends CommonPiece {
 
     /**
      * Check the movable range of the chess pieces
-     * @param destination
+     * @param destination the letter coordinate of the destination
      * @return position
      */
     @Override
@@ -49,7 +49,6 @@ public class Rook extends CommonPiece {
         }
     }
 
-
     /**
      * get the name of current piece
      * @return  the name
@@ -59,7 +58,6 @@ public class Rook extends CommonPiece {
         if (this.color.equals("white")) return "wR";
         else return "bR";
     }
-
 
     /**
      * Check if the piece is the same as itself

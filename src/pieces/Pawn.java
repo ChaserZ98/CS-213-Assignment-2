@@ -32,7 +32,6 @@ public class Pawn extends CommonPiece {
      * @return position
      */
     @Override
-
     public boolean checkMoveRange(String destination) {
         int[] intCurrentCoordinate = util.letterCoordinateToIntCoordinate(this.currentPosition);
         int[] intDestination = util.letterCoordinateToIntCoordinate(destination);

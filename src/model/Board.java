@@ -63,7 +63,6 @@ public class Board {
         }
     }
 
-
     /**
      * Get the position of each piece
      * @param letterCoordinate the string value of current letter position
@@ -86,17 +85,12 @@ public class Board {
      * @return result
      */
     public boolean isPositionUnderCapture(String position, String currentPlayer){
-/**
- * create a variable called result to check if it is captured.
- *
- */
         boolean result = false;
         CommonPiece destPiece = getPieceByPosition(position);
         CommonPiece tempPiece = new Queen(position, currentPlayer);
         if(destPiece == null){
             this.pieces.add(tempPiece);
         }
-//        this.pieces.remove(destPiece);
 
         for(CommonPiece piece : this.pieces){
             if(!piece.color.equals(currentPlayer)){
@@ -107,9 +101,6 @@ public class Board {
                 }
             }
         }
-//        if(destPiece != null){
-//            this.pieces.add(destPiece);
-//        }
         this.pieces.remove(tempPiece);
         return result;
     }
@@ -140,11 +131,7 @@ public class Board {
             }
         }
 
-        /**
-         * check castling law
-         *
-         */
-
+        //castling
         if(piece instanceof King){
             if(intCurrentCoordinate[0] == intDestination[0] && Math.abs(intCurrentCoordinate[1] - intDestination[1]) == 2){
                 int horizontalIncrement = (intDestination[1] - intCurrentCoordinate[1]) / 2;
@@ -191,7 +178,7 @@ public class Board {
      * @param piece the coordinate of current piece
      * @param destination the string value of the destination
      * @param option none
-     * @return
+     * @return true if the piece can reach the destination
      */
     public boolean isMoveReachable(CommonPiece piece, String destination, String option){
         CommonPiece destPiece = getPieceByPosition(destination);
@@ -440,7 +427,6 @@ public class Board {
      * @param option the string value of choose
      * @return piece
      */
-
     public CommonPiece promotion(CommonPiece piece, String destination, String option){
         switch (option) {
             case "B" -> {
@@ -476,7 +462,7 @@ public class Board {
     /**
      *  check the enPassant
      * @param piece the coordinate of current piece
-     * @param enPassantPawn
+     * @param enPassantPawn the pawn beside the moved pawn
      * @param destination the string value of the destination
      */
     public void enPassant(CommonPiece piece, CommonPiece enPassantPawn, String destination){
@@ -570,23 +556,23 @@ public class Board {
     }
 
     /**
-     *
+     * check if the move is legal
      * @param currentPlayer the string variable of current players
      * @param currentCoordinate the string variable of current coordinate
      * @param destination the string value of the destination
-     * @return the move piece
+     * @return true if the move is legal
      */
     public boolean movePiece(String currentPlayer, String currentCoordinate, String destination){
         return movePiece(currentPlayer, currentCoordinate, destination, "");
     }
 
     /**
-     *
+     * check if the move is legal
      * @param currentPlayer the string variable of current players
      * @param currentCoordinate the string variable of current coordinate
      * @param destination the string value of the destination
      * @param option the string variable of choosing
-     * @return
+     * @return true if the move is legal
      */
     public boolean movePiece(String currentPlayer, String currentCoordinate, String destination, String option){
         if(!util.isLetterCoordinate(currentCoordinate) || !util.isLetterCoordinate(destination)){
@@ -618,7 +604,7 @@ public class Board {
     }
 
     /**
-     * fill all the board
+     * fill the board with all the pieces
      */
     public void fillBoard(){
         for (CommonPiece piece : this.pieces) {
@@ -629,7 +615,6 @@ public class Board {
     }
 
     /**
-     *
      * initialize the chess board
      */
     public void initializePieces(){
@@ -660,7 +645,7 @@ public class Board {
     }
 
     /**
-     * build the board
+     * the text format info of board
      * @return the board
      */
     @Override
