@@ -6,17 +6,15 @@ import util.util;
 import java.util.ArrayList;
 
 /**
- * Group 13
+
+ * this class creat the board
  * @author Feiyu Zheng
  * @author Ying Yu
  *
  *
  */
 
-/**
- * Create the chess board
- *
- */
+
 public class Board {
 
     /**
@@ -55,7 +53,7 @@ public class Board {
 
     /**
      * check the enpassant and clear.
-     *
+     * @param color the string value of color
      */
     public void clearEnPassant(String color){
         for(CommonPiece piece : this.pieces){
@@ -68,7 +66,8 @@ public class Board {
 
     /**
      * Get the position of each piece
-     *
+     * @param letterCoordinate the string value of current letter position
+     * @return piece
      */
     public CommonPiece getPieceByPosition(String letterCoordinate){
         for(CommonPiece piece : this.pieces){
@@ -79,10 +78,13 @@ public class Board {
         return null;
 
     }
-/**
-  * check if the position is safe
- *
- */
+
+    /**
+     * check if the position is safe
+     * @param position the string value of position
+     * @param currentPlayer the string value of current player
+     * @return result
+     */
     public boolean isPositionUnderCapture(String position, String currentPlayer){
 /**
  * create a variable called result to check if it is captured.
@@ -115,7 +117,9 @@ public class Board {
 
     /**
      * check if the king will be checked after making a certain move
-     *
+     * @param piece the coordinate of current piece
+     * @param destination the string value of the destination
+     * @return boolean value
      */
 
     public boolean willOwnKingBeChecked(CommonPiece piece, String destination){
@@ -181,10 +185,14 @@ public class Board {
             return false;
         }
     }
-/**
- * check if the piece can reach the destination
- *
- */
+
+    /**
+     * check if the piece can reach the destination
+     * @param piece the coordinate of current piece
+     * @param destination the string value of the destination
+     * @param option none
+     * @return
+     */
     public boolean isMoveReachable(CommonPiece piece, String destination, String option){
         CommonPiece destPiece = getPieceByPosition(destination);
         int[] intCurrentCoordinate = util.letterCoordinateToIntCoordinate(piece.currentPosition);
@@ -427,7 +435,10 @@ public class Board {
 
     /**
      * check the promotion
-     *
+     * @param piece the coordinate of current piece
+     * @param destination the string value of the destination
+     * @param option the string value of choose
+     * @return piece
      */
 
     public CommonPiece promotion(CommonPiece piece, String destination, String option){
@@ -463,8 +474,10 @@ public class Board {
 
 
     /**
-     * check the enPassant
-     *
+     *  check the enPassant
+     * @param piece the coordinate of current piece
+     * @param enPassantPawn
+     * @param destination the string value of the destination
      */
     public void enPassant(CommonPiece piece, CommonPiece enPassantPawn, String destination){
         int[] intCurrentCoordinate = util.letterCoordinateToIntCoordinate(piece.currentPosition);
@@ -478,7 +491,8 @@ public class Board {
 
     /**
      * check the castling
-     *
+     * @param piece the coordinate of current piece
+     * @param destination the string value of the destination
      */
     public void castling(CommonPiece piece, String destination){
         int[] intCurrentCoordinate = util.letterCoordinateToIntCoordinate(piece.currentPosition);
@@ -492,6 +506,13 @@ public class Board {
         boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1] + 3 * horizontalIncrement] = (intCurrentCoordinate[0] + (intCurrentCoordinate[1] + 3 * horizontalIncrement)) % 2 == 1 ? "##": "  ";
     }
 
+    /**
+     * capture the pieces
+     * @param piece the coordinate of current piece
+     * @param destPiece the coordinate of current destPiece
+     * @param destination the string value of the destination
+     * @param option the string value of choose
+     */
     public void Capture(CommonPiece piece, CommonPiece destPiece, String destination, String option){
         int[] intCurrentCoordinate = util.letterCoordinateToIntCoordinate(piece.currentPosition);
         int[] intDestinationCoordinate = util.letterCoordinateToIntCoordinate(destination);
@@ -506,6 +527,12 @@ public class Board {
         boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
     }
 
+    /**
+     * make a movement of the current piece
+     * @param piece the coordinate of current piece
+     * @param destination the string variable of the destination
+     * @param option the string value of choose
+     */
     public void Move(CommonPiece piece, String destination, String option){
         int[] intCurrentCoordinate = util.letterCoordinateToIntCoordinate(piece.currentPosition);
         int[] intDestinationCoordinate = util.letterCoordinateToIntCoordinate(destination);
@@ -542,10 +569,25 @@ public class Board {
         boardLayout[intCurrentCoordinate[0]][intCurrentCoordinate[1]] = (intCurrentCoordinate[0] + intCurrentCoordinate[1]) % 2 == 1 ? "##": "  ";
     }
 
-    public boolean movePiece(String currentPlayer, String currentCoodinate, String destination){
-        return movePiece(currentPlayer, currentCoodinate, destination, "");
+    /**
+     *
+     * @param currentPlayer the string variable of current players
+     * @param currentCoordinate the string variable of current coordinate
+     * @param destination the string value of the destination
+     * @return the move piece
+     */
+    public boolean movePiece(String currentPlayer, String currentCoordinate, String destination){
+        return movePiece(currentPlayer, currentCoordinate, destination, "");
     }
 
+    /**
+     *
+     * @param currentPlayer the string variable of current players
+     * @param currentCoordinate the string variable of current coordinate
+     * @param destination the string value of the destination
+     * @param option the string variable of choosing
+     * @return
+     */
     public boolean movePiece(String currentPlayer, String currentCoordinate, String destination, String option){
         if(!util.isLetterCoordinate(currentCoordinate) || !util.isLetterCoordinate(destination)){
             System.out.println("Illegal move, try again");
@@ -575,6 +617,9 @@ public class Board {
         }
     }
 
+    /**
+     * fill all the board
+     */
     public void fillBoard(){
         for (CommonPiece piece : this.pieces) {
             int xIntCoordinate = piece.currentPosition.charAt(0) - 'a';
@@ -582,6 +627,11 @@ public class Board {
             boardLayout[yIntCoordinate][xIntCoordinate] = piece.getName();
         }
     }
+
+    /**
+     *
+     * initialize the chess board
+     */
     public void initializePieces(){
         this.pieces.add(new Rook("a8", "black"));
         this.pieces.add(new Knight("b8", "black"));
@@ -609,6 +659,10 @@ public class Board {
 
     }
 
+    /**
+     * build the board
+     * @return the board
+     */
     @Override
     public String toString() {
         StringBuilder out = new StringBuilder();

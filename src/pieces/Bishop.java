@@ -3,7 +3,7 @@ package pieces;
 import util.util;
 
 /**
- * Group 13
+ * It is an inherited class of CommonPiece
  * @author Feiyu Zheng
  * @author Ying Yu
  *
@@ -11,10 +11,6 @@ import util.util;
  */
 
 
-/**
- * It is an inherited class of CommonPiece
- *
- */
 public class Bishop extends CommonPiece {
 
     /**

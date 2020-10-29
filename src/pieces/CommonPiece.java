@@ -4,6 +4,8 @@ import java.util.Objects;
 
 /**
  * Group 13
+ *
+ *This is the base class of all chess pieces, an abstract class
  * @author Feiyu Zheng
  * @author Ying Yu
  *
@@ -11,10 +13,6 @@ import java.util.Objects;
  */
 
 
-/**
- * This is the base class of all chess pieces, an abstract class
- *
- */
 public abstract class CommonPiece {
 
     /**
