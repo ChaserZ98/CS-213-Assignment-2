@@ -7,18 +7,34 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Group 13
+ * The entity of a chess game
  * @author Feiyu Zheng
  * @author Ying Yu
  */
-
 public class ChessGame {
+    /**
+     * The string value of white player
+     */
     final String whitePlayer = "White";
+    /**
+     * The string value of black player
+     */
     final String blackPlayer = "Black";
+    /**
+     * The entity of chess board
+     */
     Board chessBoard;
+
+    /**
+     *The default constructor
+     */
     public ChessGame(){
         this.chessBoard = new Board();
     }
+
+    /**
+     * method to start the game
+     */
     public void play(){
         String currentPlayer = whitePlayer;
         chessBoard = new Board();
@@ -82,7 +98,6 @@ public class ChessGame {
 
             updateKingCheckStatus(chessBoard);
 
-            // TODO: 2020/10/26 isCheckmate method
             if(isCheckMate(chessBoard, currentPlayer.equals(whitePlayer) ? blackPlayer.toLowerCase() : whitePlayer.toLowerCase())) {
                 System.out.println("Checkmate");
                 System.out.println(currentPlayer.equals(blackPlayer)? blackPlayer + " wins" : whitePlayer + "wins");
@@ -96,6 +111,12 @@ public class ChessGame {
         }
         input.close();
     }
+
+    /**
+     * Execute if a player choose to resign
+     * @param currentPlayer The String value of current player
+     * @return a always true value to set the isGameOver flag to true
+     */
     public boolean resign(String currentPlayer){
         if(currentPlayer.equals(blackPlayer)){
             System.out.println(whitePlayer + " wins");
@@ -105,6 +126,11 @@ public class ChessGame {
         }
         return true;
     }
+
+    /**
+     * update the check status of each king
+     * @param chessBoard the chess board entity
+     */
     public void updateKingCheckStatus(Board chessBoard){
         CommonPiece whiteKing = null;
         CommonPiece blackKing = null;
@@ -126,6 +152,12 @@ public class ChessGame {
         }
     }
 
+    /**
+     * Check if checkmate occurs
+     * @param chessBoard the chess board entity
+     * @param color the color of the king you want to check
+     * @return true if checkmate occurs
+     */
     public boolean isCheckMate(Board chessBoard, String color){
         boolean result = true;
         CommonPiece king = null;
