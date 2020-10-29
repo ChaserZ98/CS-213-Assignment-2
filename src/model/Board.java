@@ -499,10 +499,6 @@ public class Board {
             return false;
         }
 
-//        boolean bool1 = isMoveReachable(piece, destination, option);
-//        boolean bool2 = !willOwnKingBeChecked(piece, destination);
-//        boolean moveResult = bool1 && bool2;
-
         boolean moveResult = (isMoveReachable(piece, destination, option) && !willOwnKingBeChecked(piece, destination));
         if(moveResult){
             CommonPiece destPiece = getPieceByPosition(destination);
@@ -516,8 +512,6 @@ public class Board {
         }
         else{
             System.out.println("Illegal move, try again");
-            System.out.println(isMoveReachable(piece, destination, option) + " " + (willOwnKingBeChecked(piece, destination)));
-//            System.out.println(bool1 + " " + bool2);
             return false;
         }
     }
