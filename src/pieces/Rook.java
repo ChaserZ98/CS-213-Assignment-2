@@ -19,6 +19,7 @@ public class Rook extends CommonPiece {
     /**
      *
      * The constructor
+     *
      * @param Position get the position
      * @param Col get the color
      */
