@@ -27,9 +27,9 @@ public class Rook extends CommonPiece {
     }
 
     /**
-     * Check the movable range of the chess pieces
-     * @param destination
-     * @return position
+     *
+     * @param destination  get target coordinates
+     * @return
      */
     @Override
     public boolean checkMoveRange(String destination) {
