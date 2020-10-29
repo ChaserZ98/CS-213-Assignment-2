@@ -10,15 +10,31 @@ import util.util;
  *
  */
 
+
+/**
+ * It is an inherited class of CommonPiece
+ *
+ */
 public class Pawn extends CommonPiece {
 
+    /**
+     * give a variable check if it can be enpassant.
+     *
+     */
     public boolean canBeEnPassant = false;
-
+    /**
+     * The constructor
+     *
+     */
     public Pawn(String Position, String Col) {
         super(Position, Col);
     }
 
     @Override
+    /**
+     * Check the movable range of the chess pieces
+     *
+     */
     public boolean checkMoveRange(String destination) {
         int[] intCurrentCoordinate = util.letterCoordinateToIntCoordinate(this.currentPosition);
         int[] intDestination = util.letterCoordinateToIntCoordinate(destination);
@@ -45,11 +61,19 @@ public class Pawn extends CommonPiece {
 
     @Override
     public String getName() {
+        /**
+         * get the name of current piece
+         *
+         */
         if (this.color.equals("white")) return "wp";
         else return "bp";
     }
 
     @Override
+    /**
+     * Check if the piece is the same as itself
+     *
+     */
     public boolean equals(Object obj) {
         return super.equals(obj);
     }

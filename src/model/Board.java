@@ -13,10 +13,26 @@ import java.util.ArrayList;
  *
  */
 
+/**
+ * Create the chess board
+ *
+ */
 public class Board {
 
+    /**
+     * Create the column coordinate with letter
+     *
+     */
     final String[] columnLetterCoordinate = {" a", " b", " c", " d", " e", " f", " g", " h"};
+    /**
+     * Create the row coordinate with number
+     *
+     */
     final String[] rowLetterCoordinate = {" 8", " 7", " 6", " 5", " 4", " 3", " 2", " 1"};
+    /**
+     * Create the arraylist to show board
+     *
+     */
     ArrayList<CommonPiece> pieces = new ArrayList<>();
     String[][] boardLayout = {
             {"  ", "##", "  ", "##", "  ", "##", "  ", "##"},
@@ -28,12 +44,19 @@ public class Board {
             {"  ", "##", "  ", "##", "  ", "##", "  ", "##"},
             {"##", "  ", "##", "  ", "##", "  ", "##", "  "},
     };
-
+    /**
+     * Create the board
+     *
+     */
     public Board() {
         initializePieces();
         fillBoard();
     }
 
+    /**
+     * check the enpassant and clear.
+     *
+     */
     public void clearEnPassant(String color){
         for(CommonPiece piece : this.pieces){
             if(piece instanceof Pawn && piece.color.equals(color)){
@@ -42,6 +65,11 @@ public class Board {
         }
     }
 
+
+    /**
+     * Get the position of each piece
+     *
+     */
     public CommonPiece getPieceByPosition(String letterCoordinate){
         for(CommonPiece piece : this.pieces){
             if(piece.currentPosition.equals(letterCoordinate)){
@@ -51,9 +79,12 @@ public class Board {
         return null;
 
     }
-
-    //check if the position is safe
+/**
+  * check if the position is safe
+ *
+ */
     public boolean isPositionUnderCapture(String position, String currentPlayer){
+
         boolean result = false;
         CommonPiece destPiece = getPieceByPosition(position);
         CommonPiece tempPiece = new Queen(position, currentPlayer);
@@ -78,7 +109,12 @@ public class Board {
         return result;
     }
 
-    //check if the king will be checked after making a certain move
+
+    /**
+     * check if the king will be checked after making a certain move
+     *
+     */
+
     public boolean willOwnKingBeChecked(CommonPiece piece, String destination){
         String originalPosition = piece.currentPosition;
         int[] intCurrentCoordinate = util.letterCoordinateToIntCoordinate(piece.currentPosition);
@@ -97,7 +133,11 @@ public class Board {
             }
         }
 
-        //check castling law
+        /**
+         * check castling law
+         *
+         */
+
         if(piece instanceof King){
             if(intCurrentCoordinate[0] == intDestination[0] && Math.abs(intCurrentCoordinate[1] - intDestination[1]) == 2){
                 int horizontalIncrement = (intDestination[1] - intCurrentCoordinate[1]) / 2;
@@ -138,8 +178,10 @@ public class Board {
             return false;
         }
     }
-
-    //check if the piece can reach the destination
+/**
+ * check if the piece can reach the destination
+ *
+ */
     public boolean isMoveReachable(CommonPiece piece, String destination, String option){
         CommonPiece destPiece = getPieceByPosition(destination);
         int[] intCurrentCoordinate = util.letterCoordinateToIntCoordinate(piece.currentPosition);
@@ -380,6 +422,11 @@ public class Board {
         }
     }
 
+    /**
+     * check the promotion
+     *
+     */
+
     public CommonPiece promotion(CommonPiece piece, String destination, String option){
         switch (option) {
             case "B" -> {
@@ -411,6 +458,11 @@ public class Board {
         return piece;
     }
 
+
+    /**
+     * check the enPassant
+     *
+     */
     public void enPassant(CommonPiece piece, CommonPiece enPassantPawn, String destination){
         int[] intCurrentCoordinate = util.letterCoordinateToIntCoordinate(piece.currentPosition);
         int[] intDestinationCoordinate = util.letterCoordinateToIntCoordinate(destination);
@@ -421,6 +473,10 @@ public class Board {
         }
     }
 
+    /**
+     * check the castling
+     *
+     */
     public void castling(CommonPiece piece, String destination){
         int[] intCurrentCoordinate = util.letterCoordinateToIntCoordinate(piece.currentPosition);
         int[] intDestinationCoordinate = util.letterCoordinateToIntCoordinate(destination);

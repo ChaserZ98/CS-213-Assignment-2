@@ -10,8 +10,16 @@ import model.ChessGame;
  *
  */
 
+/**
+ * This is a main class
+ *
+ */
 public class Chess {
 
+    /**
+     * This is a main method
+     *
+     */
     public static void main(String[] args) {
         ChessGame chess = new ChessGame();
         chess.play();

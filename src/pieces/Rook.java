@@ -10,15 +10,31 @@ import util.util;
  *
  */
 
+
+/**
+ * It is an inherited class of CommonPiece
+ *
+ */
 public class Rook extends CommonPiece {
 
+    /**
+     * give a variable check if it can castling.
+     *
+     */
     public boolean canCastling = true;
-
+    /**
+     * The constructor
+     *
+     */
     public Rook(String Position, String Col) {
         super(Position, Col);
     }
 
     @Override
+    /**
+     * Check the movable range of the chess pieces
+     *
+     */
     public boolean checkMoveRange(String destination) {
         int[] intCurrentCoordinate = util.letterCoordinateToIntCoordinate(this.currentPosition);
         int[] intDestination = util.letterCoordinateToIntCoordinate(destination);
@@ -37,12 +53,20 @@ public class Rook extends CommonPiece {
     }
 
     @Override
+    /**
+     * get the name of current piece
+     *
+     */
     public String getName() {
         if (this.color.equals("white")) return "wR";
         else return "bR";
     }
 
     @Override
+    /**
+     * Check if the piece is the same as itself
+     *
+     */
     public boolean equals(Object o) {
         return super.equals(o);
     }
