@@ -23,18 +23,22 @@ public class Pawn extends CommonPiece {
      */
     public boolean canBeEnPassant = false;
     /**
-     * The constructor
      *
+     * The constructor
+     * @param Position get the position
+     * @param Col get the color
      */
     public Pawn(String Position, String Col) {
         super(Position, Col);
     }
 
-    @Override
     /**
      * Check the movable range of the chess pieces
-     *
+     * @param destination  get target coordinates
+     * @return position
      */
+    @Override
+
     public boolean checkMoveRange(String destination) {
         int[] intCurrentCoordinate = util.letterCoordinateToIntCoordinate(this.currentPosition);
         int[] intDestination = util.letterCoordinateToIntCoordinate(destination);
@@ -59,21 +63,24 @@ public class Pawn extends CommonPiece {
         }
     }
 
+
+    /**
+     * get the name of current piece
+     * @return  the name
+     */
     @Override
     public String getName() {
-        /**
-         * get the name of current piece
-         *
-         */
         if (this.color.equals("white")) return "wp";
         else return "bp";
     }
 
-    @Override
+
     /**
      * Check if the piece is the same as itself
-     *
+     * @param obj  position
+     * @return if it is equal
      */
+    @Override
     public boolean equals(Object obj) {
         return super.equals(obj);
     }

@@ -84,7 +84,10 @@ public class Board {
  *
  */
     public boolean isPositionUnderCapture(String position, String currentPlayer){
-
+/**
+ * create a variable called result to check if it is captured.
+ *
+ */
         boolean result = false;
         CommonPiece destPiece = getPieceByPosition(position);
         CommonPiece tempPiece = new Queen(position, currentPlayer);

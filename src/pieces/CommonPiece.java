@@ -18,7 +18,7 @@ import java.util.Objects;
 public abstract class CommonPiece {
 
     /**
-     * The coordinate position of the current chess piece
+     *The coordinate position of the current chess piece
      *
      */
     public String currentPosition;
@@ -29,8 +29,10 @@ public abstract class CommonPiece {
     public String color;
 
     /**
-     * The constructor
      *
+     * The constructor
+     * @param Position get the position
+     * @param Col get the color
      */
     public CommonPiece(String Position, String Col){
         this.currentPosition = Position;
@@ -39,31 +41,33 @@ public abstract class CommonPiece {
 
     /**
      * Check the movable range of the chess pieces
-     *
+     * @param destination  get target coordinates
+     * @return position
      */
     public abstract boolean checkMoveRange(String destination);
 
 
     /**
-     * set current position of current piece
-     *
+     *  set current position of current piece
+     * @param position current position
      */
     public void setCurrentPosition(String position){
         this.currentPosition = position;
     }
+
     /**
      * get the name of current piece
-     *
+     * @return name
      */
     public abstract String getName();
 
-    @Override
 
     /**
      * Check if the piece is the same as itself
-     *
+     * @param o position
+     * @return if it is equal
      */
-
+    @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         CommonPiece that = (CommonPiece) o;

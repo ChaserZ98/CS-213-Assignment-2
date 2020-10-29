@@ -18,40 +18,47 @@ import util.util;
 public class Bishop extends CommonPiece {
 
     /**
-     * The constructor
      *
+     * The constructor
+     * @param Position get the position
+     * @param Col get the color
      */
     public Bishop(String Position, String Col) {
         super(Position, Col);
     }
 
-    @Override
+
     /**
      * Check the movable range of the chess pieces
-     *
+     * @param destination  get target coordinates
+     * @return position
      */
+    @Override
+
     public boolean checkMoveRange(String destination) {
         int[] intCurrentCoordinate = util.letterCoordinateToIntCoordinate(this.currentPosition);
         int[] intDestination = util.letterCoordinateToIntCoordinate(destination);
         return !destination.equals(this.currentPosition) && (Math.abs(intCurrentCoordinate[0] - intDestination[0]) == Math.abs(intCurrentCoordinate[1] - intDestination[1]));
     }
 
-    @Override
 
+    /**
+     * get the name of current piece
+     * @return  the name
+     */
+    @Override
     public String getName() {
-        /**
-         * get the name of current piece
-         *
-         */
         if (this.color.equals("white")) return "wB";
         else return "bB";
     }
 
-    @Override
+
     /**
      * Check if the piece is the same as itself
-     *
+     * @param o  position
+     * @return if it is equal
      */
+    @Override
     public boolean equals(Object o) {
         return super.equals(o);
     }
