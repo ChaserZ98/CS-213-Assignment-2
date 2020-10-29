@@ -3,9 +3,7 @@ package pieces;
 import java.util.Objects;
 
 /**
- * Group 13
- *
- *This is the base class of all chess pieces, an abstract class
+ * This is the base class of all chess pieces, an abstract class
  * @author Feiyu Zheng
  * @author Ying Yu
  *

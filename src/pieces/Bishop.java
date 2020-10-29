@@ -9,8 +9,6 @@ import util.util;
  *
  *
  */
-
-
 public class Bishop extends CommonPiece {
 
     /**

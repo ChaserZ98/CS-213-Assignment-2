@@ -1,7 +1,7 @@
 package util;
 
 /**
- * Group 13
+ * util class that contains some useful functions
  * @author Feiyu Zheng
  * @author Ying Yu
  *

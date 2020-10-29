@@ -3,7 +3,6 @@ package chess;
 import model.ChessGame;
 
 /**
- * Group 13
  * main class
  * @author Feiyu Zheng
  * @author Ying Yu
