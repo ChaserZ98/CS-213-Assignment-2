@@ -2,7 +2,8 @@ package model;
 
 import pieces.CommonPiece;
 import pieces.King;
-
+import util.util;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -82,9 +83,10 @@ public class ChessGame {
             updateKingCheckStatus(chessBoard);
 
             // TODO: 2020/10/26 isCheckmate method
-            if(updateKingCheckmateStatus(chessBoard)) {
-                System.out.println("checkmate");
-                //  break;
+            if(isCheckMate(chessBoard, currentPlayer.equals(whitePlayer) ? blackPlayer.toLowerCase() : whitePlayer.toLowerCase())) {
+                System.out.println("Checkmate");
+                System.out.println(currentPlayer.equals(blackPlayer)? blackPlayer + " wins" : whitePlayer + "wins");
+                isGameOver = true;
             }
 
             if(isMoveLegal){
@@ -124,134 +126,41 @@ public class ChessGame {
         }
     }
 
-    public boolean updateKingCheckmateStatus(Board chessBoard){
-        CommonPiece whiteKing = null;
-        CommonPiece blackKing = null;
-
-
-        int[] intCoordinate = new int[2];
-        int[] tempCoordinate = new int[2];
-        String newPosition;
-        boolean[] isChecked = new boolean[4];
-        for(int i=0; i<4; i++){
-            isChecked[i] = false;
-        }
-
-
+    public boolean isCheckMate(Board chessBoard, String color){
+        boolean result = true;
+        CommonPiece king = null;
         for(CommonPiece piece : chessBoard.pieces){
-            if(piece instanceof King && piece.color.equals(whitePlayer.toLowerCase())){
-                whiteKing = (King) piece;
-                intCoordinate = util.util.letterCoordinateToIntCoordinate(piece.currentPosition);
-
-                //Coordinate X-1
-                if((intCoordinate[1]<8)&&(intCoordinate[1]>0)) {
-                    tempCoordinate[1] = intCoordinate[1] - 1;
-                    tempCoordinate[0] = intCoordinate[0];
-
-                    newPosition = util.util.intCoordinateToLetterCoordinate(tempCoordinate);
-                    if (((King) whiteKing).checkMoveRange(newPosition))
-                        if (chessBoard.isPositionUnderCapture(newPosition, whitePlayer))
-                            isChecked[0] = true;
-                }
-                else isChecked[0] = true;
-
-                //Coordinate X+1
-                if((intCoordinate[1]<7)&&(intCoordinate[1]>=0)){
-                    tempCoordinate[1]=intCoordinate[1]+1;
-                    tempCoordinate[0]=intCoordinate[0];
-
-                    newPosition = util.util.intCoordinateToLetterCoordinate(tempCoordinate);
-                    if(((King) whiteKing).checkMoveRange(newPosition))
-                        // todo    if(chessBoard.isPositionUnderCapture(newPosition, whitePlayer))
-                        isChecked[1]= true;
-                }
-                else isChecked[1] = true;
-
-                //Coordinate Y-1
-                if((intCoordinate[0]<8)&&(intCoordinate[0]>0)){
-                    tempCoordinate[1]=intCoordinate[1];
-                    tempCoordinate[0]=intCoordinate[0]-1;
-
-                    newPosition = util.util.intCoordinateToLetterCoordinate(tempCoordinate);
-                    if(((King) whiteKing).checkMoveRange(newPosition))
-                        // todo   if(chessBoard.isPositionUnderCapture(newPosition, whitePlayer))
-                        isChecked[2]= true;
-                }
-                else isChecked[2] = true;
-
-                //Coordinate Y+1
-                if((intCoordinate[0]<7)&&(intCoordinate[0]>=0)){
-                    tempCoordinate[1]=intCoordinate[1];
-                    tempCoordinate[0]=intCoordinate[0]+1;
-
-                    newPosition = util.util.intCoordinateToLetterCoordinate(tempCoordinate);
-                    if(((King) whiteKing).checkMoveRange(newPosition))
-                        // todo     if(chessBoard.isPositionUnderCapture(newPosition, whitePlayer))
-                        isChecked[3]= true;
-                }
-                else isChecked[3] = true;
-
+            if(piece instanceof King && piece.color.equals(color)){
+                king = (King) piece;
+                break;
             }
-
-            else if(piece instanceof King && piece.color.equals(blackPlayer.toLowerCase())){
-                blackKing = (King) piece;
-                intCoordinate = util.util.letterCoordinateToIntCoordinate(piece.currentPosition);
-
-                //Coordinate X-1
-                if((intCoordinate[1]<8)&&(intCoordinate[1]>0)){
-                    tempCoordinate[1]=intCoordinate[1]-1;
-                    tempCoordinate[0]=intCoordinate[0];
-
-                    newPosition = util.util.intCoordinateToLetterCoordinate(tempCoordinate);
-                    if(((King) blackKing).checkMoveRange(newPosition))
-                        // todo     if(chessBoard.isPositionUnderCapture(newPosition, blackPlayer))
-                        isChecked[0]= true;
-                }
-                else isChecked[0] = true;
-
-                //Coordinate X+1
-                if((intCoordinate[1]<7)&&(intCoordinate[1]>=0)){
-                    tempCoordinate[1]=intCoordinate[1]+1;
-                    tempCoordinate[0]=intCoordinate[0];
-
-                    newPosition = util.util.intCoordinateToLetterCoordinate(tempCoordinate);
-                    if(((King) blackKing).checkMoveRange(newPosition))
-                        // todo   if(chessBoard.isPositionUnderCapture(newPosition, blackPlayer))
-                        isChecked[1]= true;
-                }
-                else isChecked[1] = true;
-
-                //Coordinate Y-1
-                if((intCoordinate[0]<8)&&(intCoordinate[0]>0)){
-                    tempCoordinate[1]=intCoordinate[1];
-                    tempCoordinate[0]=intCoordinate[0]-1;
-
-                    newPosition = util.util.intCoordinateToLetterCoordinate(tempCoordinate);
-                    if(((King) blackKing).checkMoveRange(newPosition))
-                        // todo    if(chessBoard.isPositionUnderCapture(newPosition, blackPlayer))
-                        isChecked[2]= true;
-                }
-                else isChecked[2] = true;
-
-                //Coordinate Y+1
-                if((intCoordinate[0]<7)&&(intCoordinate[0]>=0)){
-                    tempCoordinate[1]=intCoordinate[1];
-                    tempCoordinate[0]=intCoordinate[0]+1;
-
-                    newPosition = util.util.intCoordinateToLetterCoordinate(tempCoordinate);
-                    if(((King) blackKing).checkMoveRange(newPosition))
-                        // todo if(chessBoard.isPositionUnderCapture(newPosition, blackPlayer))
-                        isChecked[3]= true;
-                }
-                else isChecked[3] = true;
-
+        }
+        if(!((King) king).isChecked){
+            return false;
+        }
+        int[] intKingCoordinate = util.letterCoordinateToIntCoordinate(king.currentPosition);
+        int[][] nearbyIntCoordinate = {
+                {intKingCoordinate[0] + 1, intKingCoordinate[1] - 1}, {intKingCoordinate[0] + 1, intKingCoordinate[1]}, {intKingCoordinate[0] + 1, intKingCoordinate[1] + 1},
+                {intKingCoordinate[0], intKingCoordinate[1] - 1}, {intKingCoordinate[0], intKingCoordinate[1] + 1},
+                {intKingCoordinate[0] - 1, intKingCoordinate[1] - 1}, {intKingCoordinate[0] - 1, intKingCoordinate[1]}, {intKingCoordinate[0] - 1, intKingCoordinate[1] + 1}
+        };
+        ArrayList<String> legalMove = new ArrayList<>();
+        for(int[] intCoordinate : nearbyIntCoordinate){
+            String letterCoordinate = util.intCoordinateToLetterCoordinate(intCoordinate);
+            if(util.isLetterCoordinate(letterCoordinate)){
+                legalMove.add(letterCoordinate);
             }
-
         }
 
-        // todo return isChecked[0]&&isChecked[1]&&isChecked[2]&&isChecked[3];
-        return false;  //remove after all done
-
+        for(String position : legalMove){
+            CommonPiece pieceOnPosition = chessBoard.getPieceByPosition(position);
+            if(chessBoard.isMoveReachable(king, position, "")){
+                if(!chessBoard.isPositionUnderCapture(position, king.color)){
+                    result = false;
+                }
+            }
+        }
+        return result;
     }
 
 
